@@ -69,6 +69,10 @@ public final class GuavaOptionalAwareContractTest {
 
         @GET
         @Path("foo")
+        String queryJava8(@QueryParam("opt") java.util.Optional<String> opt, @QueryParam("req") String req);
+
+        @GET
+        @Path("foo")
         String header(@HeaderParam("opt") Optional<String> opt, @HeaderParam("req") String req);
     }
 
@@ -102,6 +106,13 @@ public final class GuavaOptionalAwareContractTest {
     @Test
     public void testEmptyStringQuery() throws Exception {
         proxy.query(Optional.<String>of(""), "str2");
+        RecordedRequest takeRequest = server.takeRequest();
+        assertThat(takeRequest.getRequestLine(), is("GET /foo?opt=&req=str2 HTTP/1.1"));
+    }
+
+    @Test
+    public void testEmptyStringQueryJava8() throws Exception {
+        proxy.queryJava8(java.util.Optional.<String>of(""), "str2");
         RecordedRequest takeRequest = server.takeRequest();
         assertThat(takeRequest.getRequestLine(), is("GET /foo?opt=&req=str2 HTTP/1.1"));
     }
