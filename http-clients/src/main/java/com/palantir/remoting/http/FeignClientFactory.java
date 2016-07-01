@@ -136,6 +136,7 @@ public final class FeignClientFactory {
                 .logger(new Slf4jLogger(FeignClients.class))
                 .logLevel(Level.BASIC)
                 .requestInterceptor(UserAgentInterceptor.of(userAgent))
+                .requestInterceptor(RequestLoggerInterceptor.INSTANCE)
                 .target(type, uri);
     }
 
@@ -169,6 +170,7 @@ public final class FeignClientFactory {
                 .logger(new Slf4jLogger(FeignClients.class))
                 .logLevel(Level.BASIC)
                 .requestInterceptor(UserAgentInterceptor.of(userAgent))
+                .requestInterceptor(RequestLoggerInterceptor.INSTANCE)
                 .target(target);
     }
 
