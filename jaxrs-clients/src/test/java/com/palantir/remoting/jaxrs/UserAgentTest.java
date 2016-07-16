@@ -50,7 +50,7 @@ public final class UserAgentTest {
 
     @Test
     public void testUserAgent_default() throws InterruptedException {
-        TestService service = Client.jaxrs().build(TestService.class, USER_AGENT, endpointUri);
+        TestService service = Client.builder().build(TestService.class, USER_AGENT, endpointUri);
         service.get();
 
         RecordedRequest request = server.takeRequest();
@@ -61,7 +61,7 @@ public final class UserAgentTest {
     public void testUserAgent_invalidUserAgentThrows() throws InterruptedException {
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage(is("User Agent must match pattern '[A-Za-z0-9()-/\\.,_\\s]+': !@"));
-        Client.jaxrs().build(TestService.class, "!@", endpointUri);
+        Client.builder().build(TestService.class, "!@", endpointUri);
     }
 
     @Path("/")

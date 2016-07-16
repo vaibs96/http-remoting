@@ -49,7 +49,7 @@ public final class FailoverFeignTargetTest {
         server1.shutdown();
         server2.enqueue(new MockResponse().setBody("\"foo\""));
 
-        FakeoInterface proxy = Client.jaxrs().build(FakeoInterface.class, "agent",
+        FakeoInterface proxy = Client.builder().build(FakeoInterface.class, "agent",
                         ImmutableList.of(
                                 "http://localhost:" + server1.getPort(),
                                 "http://localhost:" + server2.getPort()));
@@ -58,7 +58,7 @@ public final class FailoverFeignTargetTest {
 
     @Test
     public void testConsecutiveCalls() throws Exception {
-        FakeoInterface proxy = Client.jaxrs().build(FakeoInterface.class, "agent",
+        FakeoInterface proxy = Client.builder().build(FakeoInterface.class, "agent",
                 ImmutableList.of(
                         "http://localhost:" + server1.getPort(),
                         "http://localhost:" + server2.getPort()));

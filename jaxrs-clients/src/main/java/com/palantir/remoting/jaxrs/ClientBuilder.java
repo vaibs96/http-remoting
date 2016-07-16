@@ -58,9 +58,7 @@ public abstract class ClientBuilder {
 
     public final ClientBuilder ssl(Optional<SslConfiguration> config) {
         if (config.isPresent()) {
-            verifySslConfigurationUnset();
-            thisSslSocketFactory = Optional.of(SslSocketFactories.createSslSocketFactory(config.get()));
-            thisTrustManager = Optional.of(
+            ssl(SslSocketFactories.createSslSocketFactory(config.get()),
                     (X509TrustManager) SslSocketFactories.createTrustManagers(config.get())[0]);
         }
         return this;
@@ -73,17 +71,13 @@ public abstract class ClientBuilder {
         return this;
     }
     public final ClientBuilder connectTimeout(long connectTimeout, TimeUnit unit) {
-        if (thisConnectTimeout.isPresent()) {
-            Preconditions.checkArgument(!thisConnectTimeout.isPresent(), "connectTimeout already set");
-        }
+        Preconditions.checkArgument(!thisConnectTimeout.isPresent(), "connectTimeout already set");
         thisConnectTimeout = Optional.of(Duration.millis(TimeUnit.MILLISECONDS.convert(connectTimeout, unit)));
         return this;
     }
 
     public final ClientBuilder readTimeout(long readTimeout, TimeUnit unit) {
-        if (thisReadTimeout.isPresent()) {
-            Preconditions.checkArgument(!thisReadTimeout.isPresent(), "readTimeout already set");
-        }
+        Preconditions.checkArgument(!thisReadTimeout.isPresent(), "readTimeout already set");
         thisReadTimeout = Optional.of(Duration.millis(TimeUnit.MILLISECONDS.convert(readTimeout, unit)));
         return this;
     }

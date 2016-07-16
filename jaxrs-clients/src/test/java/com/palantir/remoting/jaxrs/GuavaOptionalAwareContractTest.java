@@ -42,7 +42,7 @@ public final class GuavaOptionalAwareContractTest {
 
     @Before
     public void before() {
-        proxy = Client.jaxrs()
+        proxy = Client.builder()
                 .build(FakeoInterface.class, "agent", "http://localhost:" + server.getPort());
         server.enqueue(new MockResponse().setBody("\"foo\""));
     }
@@ -72,7 +72,7 @@ public final class GuavaOptionalAwareContractTest {
     @Test
     public void testCannotDecorateInterfaceWithOptionalPathParam() {
         try {
-            Client.jaxrs().build(CannotDecorateInterface.class, "agent", "http://localhost:" + server.getPort());
+            Client.builder().build(CannotDecorateInterface.class, "agent", "http://localhost:" + server.getPort());
             fail();
         } catch (RuntimeException e) {
             assertThat(e.getMessage(), is("Cannot use Guava Optionals with PathParams."

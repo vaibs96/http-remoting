@@ -80,7 +80,7 @@ public final class JaxRsWithHeaderAndQueryMapContractTests {
 
     @Test
     public void testJaxRsInterfaceWithHeaderMap() throws Exception {
-        HeaderMapTestInterface proxy = Client.jaxrs()
+        HeaderMapTestInterface proxy = Client.builder()
                 .build(HeaderMapTestInterface.class, "agent", "http://localhost:" + server.getPort());
         server.enqueue(new MockResponse());
 
@@ -125,7 +125,7 @@ public final class JaxRsWithHeaderAndQueryMapContractTests {
 
     @Test
     public void testJaxRsInterfaceWithQueryMap() throws Exception {
-        QueryMapTestInterface proxy = Client.jaxrs()
+        QueryMapTestInterface proxy = Client.builder()
                 .build(QueryMapTestInterface.class, "agent", "http://localhost:" + server.getPort());
         server.enqueue(new MockResponse());
 

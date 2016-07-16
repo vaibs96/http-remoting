@@ -90,7 +90,7 @@ public final class FeignJaxRsClientBuilderTest {
     @Test
     public void testSslSocketFactory_cannotConnectWhenSocketFactoryIsNotSet() throws Exception {
         String endpointUri = "https://localhost:" + ECHO_SERVER.getLocalPort();
-        TestEchoService service = Client.jaxrs().build(TestEchoService.class, "agent", endpointUri);
+        TestEchoService service = Client.builder().build(TestEchoService.class, "agent", endpointUri);
 
         try {
             service.echo("foo");
@@ -155,7 +155,7 @@ public final class FeignJaxRsClientBuilderTest {
     private static TestEchoService createProxy(int port, String name) {
         String endpointUri = "https://localhost:" + port;
         SslConfiguration sslConfig = SslConfiguration.of(Paths.get("src/test/resources/trustStore.jks"));
-        return Client.jaxrs()
+        return Client.builder()
                 .ssl(SslSocketFactories.createSslSocketFactory(sslConfig),
                         (X509TrustManager) SslSocketFactories.createTrustManagers(sslConfig)[0])
                 .build(TestEchoService.class, name, endpointUri);

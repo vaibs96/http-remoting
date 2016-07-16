@@ -68,7 +68,8 @@ public final class TextDelegateDecoderTest {
         textDelegateDecoder = new TextDelegateDecoder(delegate);
 
         String endpointUri = "http://localhost:" + APP.getLocalPort();
-        service = com.palantir.remoting.jaxrs.Client.jaxrs().build(TestServer.TestService.class, "agent", endpointUri);
+        service = com.palantir.remoting.jaxrs.Client.builder()
+                .build(TestServer.TestService.class, "agent", endpointUri);
     }
 
     @Test

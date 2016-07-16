@@ -28,7 +28,7 @@ public final class Client {
 
     /** Creates a client for the given service configuration. The user agent */
     public static <T> T create(Class<T> serviceClass, String userAgent, ServiceConfiguration config) {
-        ClientBuilder client = jaxrs().ssl(config.security());
+        ClientBuilder client = builder().ssl(config.security());
         if (config.connectTimeout().isPresent()) {
             client.connectTimeout(config.connectTimeout().get().toMilliseconds(), TimeUnit.MILLISECONDS);
 
@@ -43,7 +43,7 @@ public final class Client {
      * Creates a builder for a client for a JAX-RS-specified service that attempts to connect to the given URIs with
      * round-robin fail-over.
      */
-    public static ClientBuilder jaxrs() {
+    public static ClientBuilder builder() {
         return new FeignJaxRsClientBuilder();
     }
 }
